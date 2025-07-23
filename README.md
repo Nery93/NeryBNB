@@ -150,14 +150,7 @@ Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalh
 ---
 
 ## 👨‍💻 Autor
-
-**Nery93**
-- GitHub: [@Nery93](https://github.com/Nery93)
-- LinkedIn: [Seu LinkedIn](https://linkedin.com/in/seu-perfil)
-
 ---
-
 <div align="center">
   <p>⭐ Se este projeto te ajudou, considere dar uma estrela!</p>
-  <p>💜 Feito com paixão por <strong>Nery93</strong></p>
 </div>
