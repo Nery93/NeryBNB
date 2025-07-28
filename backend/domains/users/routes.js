@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
 // Route to create a new user
 // Expects a JSON body with name, email, and password
 router.post('/', async (req, res) => {
-  console.log("REQ.BODY:", req.body);
+
   try {
     const { name, email, password } = req.body; // ← PEGA do body!
 
