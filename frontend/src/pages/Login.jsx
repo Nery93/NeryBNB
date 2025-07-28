@@ -1,16 +1,47 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link, Navigate } from 'react-router-dom';
+import axios from 'axios';
 
-const Login = () => {
+const Login = ({ user, setUser }) => {
+  // trabalhando com variaveis de estado
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [redirect, setRedirect] = useState(false);
+
+  const handleSubmit = async (e) => { 
+    e.preventDefault(); // previne o comportamento padrão do formulário de recarregar a página
+
+    const userData = { email, password }; // cria um objeto com os dados do usuário
+
+
+    if (email && password) {
+     try {
+      const response = await axios.post('/users/login', userData); // faz a requisição para o backend
+      const { user } = response.data; // extrai o usuário da resposta
+      setUser(user); // atualiza o estado do usuário no App.jsx
+      setRedirect(true); // define o redirecionamento para true
+     } catch (error) {
+       console.error("Erro ao realizar login:", error);
+       alert("Erro ao realizar login. Por favor, tente novamente.");
+     }  
+    } else {
+      alert("Por favor, preencha todos os campos."); 
+    }
+  }
+
+  if (redirect || user)  return <Navigate to="/" />; // redireciona para a página inicial após o login
+
   return (
     <section className='min-h-screen flex items-center justify-center bg-gray-50'>
         <div className='w-full max-w-md mx-auto flex flex-col gap-6 p-8 bg-white rounded-lg shadow-lg'>
         <h1 className='text-4xl font-bold text-center text-gray-800'>Faça seu login</h1>
 
-        <form action="" className='flex flex-col gap-5 w-full'>
-          <input className='border border-gray-300 rounded-4xl px-6 py-4 text-lg focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent' type="email" placeholder="Digite seu email" required />
-          <input className='border border-gray-300 rounded-4xl px-6 py-4 text-lg focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent' type="password" placeholder="Digite sua senha" required />
-          <button className='bg-primary-400 text-white rounded-4xl px-6 py-4 text-lg font-semibold hover:bg-primary-500 transition-colors duration-200' type="submit">Login</button>
+        <form action="" className='flex flex-col gap-5 w-full' onSubmit={handleSubmit}>
+          <input className='border border-gray-300 rounded-4xl px-6 py-4 text-lg focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent' type="email" placeholder="Digite seu email" required
+          value={email} onChange={(e) => setEmail(e.target.value)}/>
+          <input className='border border-gray-300 rounded-4xl px-6 py-4 text-lg focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent' type="password" placeholder="Digite sua senha" required 
+          value={password} onChange={(e) => setPassword(e.target.value)}/>
+          <button className='bg-primary-400 text-white rounded-4xl px-6 py-4 text-lg font-semibold hover:bg-primary-500 transition-colors duration-200 cursor-pointer' type="submit">Login</button>
         </form>
 
         <p className='text-center text-gray-600'>Ainda não tem conta? <Link to="/register" className='text-primary-400 hover:underline font-medium'>Cadastre-se</Link></p>

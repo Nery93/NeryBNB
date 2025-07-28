@@ -40,4 +40,23 @@ router.post('/', async (req, res) => {
   }
 });
 
+
+router.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+    const {name, _id} = user;
+    if (!user)  return res.status(401).json({ error: "E-mail ou senha inválidos!" });
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) return res.status(401).json({ error: "E-mail ou senha inválidos!" });
+
+    // Se chegou aqui, login OK!
+    res.status(200).json({ message: "Login realizado com sucesso!", user: { name, _id } });
+  } catch (error) {
+    return res.status(500).json({ error: "Erro ao buscar usuário!" });
+  }
+});
+
 export default router;
