@@ -2,8 +2,11 @@ import express from 'express';
 import { Router } from 'express';
 import bcrypt from 'bcrypt';
 import User from './model.js';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 
 const router = Router();
+dotenv.config();
 
 router.get('/', async (req, res) => {
 
@@ -15,9 +18,23 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/profile', async (req, res) => {
+  const {token} = req.cookies;
 
-// Route to create a new user
-// Expects a JSON body with name, email, and password
+  if (token) {
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      res.status(200).json({ user: decoded.user });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  } else {
+    res.json({ user: null });
+  }
+});
+
+
+
 router.post('/', async (req, res) => {
 
   try {
@@ -34,11 +51,17 @@ router.post('/', async (req, res) => {
 
     const newUser = new User({ name, email, password: hashedPassword }); // ← Usa os dados recebidos!
     const savedUser = await newUser.save();
-    res.status(201).json(savedUser);
+
+    const { name: userName, _id } = savedUser;
+    const newUserObject = { name: userName, email, _id };
+    const token = jwt.sign({ user: newUserObject }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    res.cookie('token', token, { httpOnly: true });
+    res.status(201).json({ user: newUserObject });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 });
+
 
 
 router.post('/login', async (req, res) => {
@@ -46,17 +69,23 @@ router.post('/login', async (req, res) => {
 
   try {
     const user = await User.findOne({ email });
-    const {name, _id} = user;
-    if (!user)  return res.status(401).json({ error: "E-mail ou senha inválidos!" });
+    if (!user) return res.status(401).json({ error: "E-mail ou senha inválidos!" });
+    const { name, _id } = user;
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) return res.status(401).json({ error: "E-mail ou senha inválidos!" });
+    if (!isPasswordValid) {
+      return res.status(401).json({ error: "E-mail ou senha inválidos!" });
+    }
 
-    // Se chegou aqui, login OK!
-    res.status(200).json({ message: "Login realizado com sucesso!", user: { name, _id } });
+    const newUserObject = { name, email, _id };
+    const token = jwt.sign({ user: newUserObject }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    res.cookie('token', token, { httpOnly: true });
+    return res.status(200).json({ message: "Login realizado com sucesso!", user: { name, _id } });
   } catch (error) {
     return res.status(500).json({ error: "Erro ao buscar usuário!" });
   }
 });
+
+
 
 export default router;

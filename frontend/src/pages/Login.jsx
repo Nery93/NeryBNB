@@ -3,23 +3,23 @@ import { Link, Navigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Login = ({ user, setUser }) => {
-  // trabalhando com variaveis de estado
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
 
   const handleSubmit = async (e) => { 
-    e.preventDefault(); // previne o comportamento padrão do formulário de recarregar a página
+    e.preventDefault(); 
 
-    const userData = { email, password }; // cria um objeto com os dados do usuário
+    const userData = { email, password }; 
 
 
     if (email && password) {
      try {
-      const response = await axios.post('/users/login', userData); // faz a requisição para o backend
-      const { user } = response.data; // extrai o usuário da resposta
-      setUser(user); // atualiza o estado do usuário no App.jsx
-      setRedirect(true); // define o redirecionamento para true
+      const response = await axios.post('/users/login', userData); 
+      const { user } = response.data; 
+      setUser(user); 
+      setRedirect(true); 
      } catch (error) {
        console.error("Erro ao realizar login:", error);
        alert("Erro ao realizar login. Por favor, tente novamente.");
@@ -29,7 +29,7 @@ const Login = ({ user, setUser }) => {
     }
   }
 
-  if (redirect || user)  return <Navigate to="/" />; // redireciona para a página inicial após o login
+  if (redirect || user)  return <Navigate to="/" />; 
 
   return (
     <section className='min-h-screen flex items-center justify-center bg-gray-50'>

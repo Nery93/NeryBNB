@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react'
 import { Link, Navigate } from 'react-router-dom';
 /* import axios from 'axios'; */
@@ -12,23 +13,33 @@ const Register = ({ setUser }) => {
   const handleSubmit = async (e) => { //aprendi isso hoje na aula 04
     e.preventDefault(); // previne o comportamento padrão do formulário de recarregar a página
 
-    /* const userData = { email, password }; 
-    if (email && password) {
-     try {
-      const response = await axios.post('/users/login', userData); 
-      const { user } = response.data; 
-      setUser(user); // atualiza o estado do usuário no App.jsx
-      setRedirect(true); 
-     } catch (error) {
-       console.error("Erro ao realizar login:", error);
-       alert("Erro ao realizar login. Por favor, tente novamente.");
-     }  
+    const userData = { email, password, name }; 
+    if (email && password && name) {
+      try {
+        const response = await axios.post('/users', userData);
+        // O backend retorna o usuário criado diretamente
+        if (response.data && response.data.user && response.data.user._id) {
+          setUser(response.data.user);
+          setRedirect(true);
+        } else {
+          alert("Registro realizado, mas resposta inesperada do servidor.");
+        }
+      } catch (error) {
+        if (error.response && error.response.status === 409) {
+          alert("E-mail já cadastrado. Tente outro e-mail.");
+        } else if (error.response && error.response.status === 400) {
+          alert("Dados inválidos. Verifique os campos e tente novamente.");
+        } else {
+          alert("Erro ao realizar registro. Por favor, tente novamente.");
+        }
+        console.error("Erro ao realizar registro:", error);
+      }
     } else {
       alert("Por favor, preencha todos os campos.");
-    } */
+    }
   }
 
-  /* if (redirect)  return <Navigate to="/" />; */ // redireciona para a página inicial após o login
+  if (redirect)  return <Navigate to="/" />; // redireciona para a página inicial após o login
 
   
   return (
