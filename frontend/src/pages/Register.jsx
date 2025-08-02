@@ -5,12 +5,12 @@ import { Link, Navigate } from 'react-router-dom';
 
 const Register = ({ setUser }) => {
   // trabalhando com variaveis de estado
-  const [name, setName] = useState(""); //aprendi isso hoje na aula 04
-  const [email, setEmail] = useState(""); //aprendi isso hoje na aula 04
-  const [password, setPassword] = useState(""); //aprendi isso hoje na aula 04
-  const [redirect, setRedirect] = useState(false); //para redirecionar o usuário após o login
+  const [name, setName] = useState(""); 
+  const [email, setEmail] = useState(""); 
+  const [password, setPassword] = useState(""); 
+  const [redirect, setRedirect] = useState(false); //para redirecionar o usuário após o registro
 
-  const handleSubmit = async (e) => { //aprendi isso hoje na aula 04
+  const handleSubmit = async (e) => { 
     e.preventDefault(); // previne o comportamento padrão do formulário de recarregar a página
 
     const userData = { email, password, name }; 
@@ -22,6 +22,7 @@ const Register = ({ setUser }) => {
           setUser(response.data.user);
           setRedirect(true);
         } else {
+
           alert("Registro realizado, mas resposta inesperada do servidor.");
         }
       } catch (error) {
@@ -39,7 +40,7 @@ const Register = ({ setUser }) => {
     }
   }
 
-  if (redirect)  return <Navigate to="/" />; // redireciona para a página inicial após o login
+  if (redirect)  return <Navigate to="/" />; // redireciona para a página inicial após o registro
 
   
   return (
