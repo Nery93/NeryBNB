@@ -11,7 +11,7 @@ const Register = ({ setUser }) => {
   const [redirect, setRedirect] = useState(false); //para redirecionar o usuário após o registro
 
   const handleSubmit = async (e) => { 
-    e.preventDefault(); // previne o comportamento padrão do formulário de recarregar a página
+    e.preventDefault(); 
 
     const userData = { email, password, name }; 
     if (email && password && name) {

@@ -29,7 +29,7 @@ const Login = ({ user, setUser }) => {
     }
   }
 
-  if (redirect || user)  return <Navigate to="/" />; 
+  if (redirect)  return <Navigate to="/" />; 
 
   return (
     <section className='min-h-screen flex items-center justify-center bg-gray-50'>
