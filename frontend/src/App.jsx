@@ -1,11 +1,12 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { useEffect } from "react"
+import { useState } from "react"
+import axios from "axios"
 import Header from "./components/Header"
 import Home from "./pages/Home"
 import Login from "./pages/Login"
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import axios from "axios"
-import { useState } from "react"
 import Register from "./pages/Register"
-import { useEffect } from "react"
+import Account from "./pages/Account"
 
 axios.defaults.baseURL = import.meta.env.VITE_AXIOS_BASE_URL;
 axios.defaults.withCredentials = true; 
@@ -33,6 +34,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login user={user} setUser={setUser} />} />
           <Route path="/register" element={<Register user={user} setUser={setUser} />} />
+          <Route path="/account/:subpage?" element={<Account/> } />
         </Routes>
       </>
     </BrowserRouter>
