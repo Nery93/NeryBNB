@@ -34,7 +34,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login user={user} setUser={setUser} />} />
           <Route path="/register" element={<Register user={user} setUser={setUser} />} />
-          <Route path="/account/:subpage?" element={<Account/> } />
+          <Route path="/account/:subpage?" element={<Account user={user} />} />
         </Routes>
       </>
     </BrowserRouter>
