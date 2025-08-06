@@ -1,19 +1,21 @@
 import axios from 'axios';
-import React from 'react'
+import React, { useState } from 'react'
 import { Navigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
+import { useUserContext } from '../contexts/UserContext';
 
-
-const AccProfile = ({ user}) => {
+const AccProfile = () => {
+    const { user, setUser } = useUserContext();
     const [redirect, setRedirect] = React.useState(false);
 
     const logout = async () => {
         try {
             const { data } = await axios.post('/users/logout');
+            setUser(null);
             setRedirect(true);
-            alert(data.message || "Logout realizado com sucesso!");
+            toast.success(data.message || "Logout realizado com sucesso!");
         } catch (error) {
-            console.error(error);
-            alert("Erro ao realizar logout.");
+            toast.error(error.response.data.message || "Erro ao realizar logout.");
         }
     };
 

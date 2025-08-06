@@ -1,13 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useParams, Navigate, Link } from 'react-router-dom'
 import AccProfile from '../components/AccProfile'
+import { useUserContext } from '../contexts/UserContext'
 
-const Account = ({ user }) => {
+const Account = () => {
     const {subpage} = useParams()
+    const { user } = useUserContext()
  
     const buttonClass = (button) => {
         let finalClass = 'rounded-full hover:bg-primary-400 hover:text-white px-4 py-2 cursor-pointer transition-colors'
-        if(subpage === button)  return finalClass + ' bg-primary-400 text-white'     
+        if(subpage == button)  return finalClass + ' bg-primary-400 text-white'     
         return finalClass
     }
 

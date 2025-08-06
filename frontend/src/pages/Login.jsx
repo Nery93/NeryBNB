@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Link, Navigate } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from 'react-hot-toast';
+import { useUserContext } from '../contexts/UserContext';
 
-const Login = ({ setUser }) => {
-  
+const Login = () => {
+  const { setUser } = useUserContext();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
@@ -19,13 +21,13 @@ const Login = ({ setUser }) => {
       const response = await axios.post('/users/login', userData); 
       const { user } = response.data; 
       setUser(user); 
+      toast.success("Login realizado com sucesso!");
       setRedirect(true); 
      } catch (error) {
-       console.error("Erro ao realizar login:", error);
-       alert("Erro ao realizar login. Por favor, tente novamente.");
+       toast.error("Erro ao realizar login. Por favor, tente novamente.");
      }  
     } else {
-      alert("Por favor, preencha todos os campos."); 
+      toast.error("Por favor, preencha todos os campos."); 
     }
   }
 

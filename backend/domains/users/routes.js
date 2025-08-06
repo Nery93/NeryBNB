@@ -35,8 +35,6 @@ router.post('/', async (req, res) => {
 
   try {
     const { name, email, password } = req.body;
-
-
     const existingUser = await User.findOne({ email });
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
