@@ -10,8 +10,10 @@ const Item = () => {
         />
         <h3>Casa em Lisboa</h3>
         <p className="truncate text-gray-600">
-          Uma linda casa localizada no coração de Lisboa, perfeita para férias em família ou uma escapada romântica.
-
+          Uma linda casa localizada no coração de Lisboa, perfeita para férias em 
+          família ou uma escapada romântica. Com uma vista privilegiada para o mar, 
+          essa casa oferece uma experiência única e memorável. É um lugar perfeito 
+          para relaxar, fazer amigos e desfrutar de momentos especiais.
         </p>
         <p>
          <span className='font-semibold'>€550 por noite</span>

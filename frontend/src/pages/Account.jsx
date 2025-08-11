@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { useParams, Navigate, Link } from 'react-router-dom'
 import AccProfile from '../components/AccProfile'
 import { useUserContext } from '../contexts/UserContext'
+import AccPlaces from '../components/AccPlaces'
 
 const Account = () => {
     const {subpage} = useParams()
@@ -20,10 +21,11 @@ const Account = () => {
                 <div className='flex'>
                     <Link to="/account/profile" className={buttonClass('profile')}>Perfil</Link>
                     <Link to="/account/bookings" className={buttonClass('bookings')}>Reservas</Link>
-                    <Link to="/account/places" className={buttonClass('places')}>Lugares</Link>
+                    <Link to="/account/places" className={buttonClass('places')}>Acomodações</Link>
                 </div>
 
                 {subpage === "profile" && <AccProfile user={user} />}
+                {subpage === "places" && <AccPlaces/>}
 
             </div>
         </section>

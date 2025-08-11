@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom'
 import { useUserContext } from '../contexts/UserContext'
 
 export const Header = () => {
+    
     const { user } = useUserContext();
+
     return (
 
         <header className='shadow-md'>
