@@ -8,7 +8,7 @@ const AccPlaces = () => {
     const {action} = useParams()
     
     return (
-        <div  className='w-full max-w-7x1'>
+        <div  className='w-full'>
             {action !== "new" ? (
                 <Link to="/account/places/new" className=' hover:bg-primary-500 flex items-center justify-center gap-2 bg-primary-400 text-white rounded-full px-6 py-2 mt-4 font-medium hover:bg-primary-500 transition-colors cursor-pointer'>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
